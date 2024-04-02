@@ -35,6 +35,26 @@ const getRecipes = async (query) => {
     }
 
 }
+
+const fetchingredients = (meals) => {
+    console.log(meals)
+    let ingredientList = ""
+    for (let i = 1; i <= 20; i++) {
+        const ingredient = meals[`strMeasure${i}`]
+        if (ingredient) {
+            const measure = meals[`strMeasure${i}`]
+            ingredientList = ingredientList + `<li>${measure}${ingredient}</li>.`
+        } else {
+            break
+        }
+    }
+    return ingredientList
+
+}
+
+
+
+
 const openPopup = (meals) => {
 
     const popMenu = document.createElement("div")
@@ -43,6 +63,8 @@ const openPopup = (meals) => {
 
     popMenu.innerHTML = `<i class="fa-solid fa-x"></i>
     <p class="instructions">${meals.strInstructions}</p>
+    <span class="ingredients-header">Ingredients</span>
+    <ul class="ingredients">${fetchingredients(meals)}</ul>
     `
     recipeContainer.appendChild(popMenu)
     const popupContainer = document.querySelector(".popup")
@@ -50,7 +72,7 @@ const openPopup = (meals) => {
     console.log(closeBtn)
 
     closeBtn.addEventListener("click", () => {
-        popupContainer.style.dispay = "none"
+        popMenu.remove()
         console.log("logged")
     })
 }
